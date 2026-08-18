@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -46,6 +46,37 @@
       opacity: 0.03;
       pointer-events: none;
       z-index: 99;
+    }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: var(--bg-color);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+    .preloader-text {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      letter-spacing: 10px;
+      color: var(--gold-accent);
+      margin-bottom: 20px;
+      animation: pulseText 1.5s infinite alternate;
+    }
+    .preloader-line {
+      width: 0;
+      height: 1px;
+      background-color: var(--gold-accent);
+      animation: loadLine 2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+    }
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
     }
 
     /* Header Section */
@@ -104,6 +135,60 @@
       animation: pulseLine 2s infinite;
     }
 
+    /* Story Section */
+    .story-section {
+      padding: 120px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .story-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: var(--gold-accent);
+      margin-bottom: 30px;
+      letter-spacing: 4px;
+    }
+    .story-text {
+      font-size: 1.25rem;
+      line-height: 2;
+      color: #ccc;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+    .story-signature {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: var(--text-main);
+      font-style: italic;
+      letter-spacing: 2px;
+      opacity: 0.8;
+    }
+
+    /* Marquee */
+    .marquee-container {
+      width: 100%;
+      overflow: hidden;
+      padding: 40px 0;
+      background-color: rgba(207, 168, 97, 0.02);
+      border-top: 1px solid rgba(207, 168, 97, 0.15);
+      border-bottom: 1px solid rgba(207, 168, 97, 0.15);
+      display: flex;
+      white-space: nowrap;
+    }
+    .marquee-text {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      letter-spacing: 8px;
+      color: rgba(207, 168, 97, 0.8);
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-text span {
+      padding: 0 40px;
+    }
+
     /* Gallery Section */
     .gallery-container {
       max-width: 1600px;
@@ -122,12 +207,14 @@
       font-weight: 400;
       color: var(--gold-accent);
       margin-bottom: 10px;
+      letter-spacing: 2px;
     }
 
     .gallery-header p {
       font-size: 1.1rem;
       color: #888;
       font-weight: 300;
+      letter-spacing: 1px;
     }
 
     .gallery-grid {
@@ -139,9 +226,12 @@
     /* Individual Card */
     .gallery-item {
       position: relative;
-
+      border-radius: 4px;
       overflow: hidden;
       cursor: pointer;
+      background: #111;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      transform-style: preserve-3d;
     }
 
     .img-wrapper {
@@ -149,6 +239,7 @@
       aspect-ratio: 4/5;
       overflow: hidden;
       position: relative;
+      transform: translateZ(20px);
     }
 
     .img-wrapper::after {
@@ -183,12 +274,12 @@
       left: 0;
       width: 100%;
       padding: 30px;
-      transform: translateY(20px);
+      transform: translateZ(40px) translateY(20px);
       transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     .gallery-item:hover .item-content {
-      transform: translateY(0);
+      transform: translateZ(40px) translateY(0);
     }
 
     .item-title {
@@ -228,7 +319,7 @@
       text-align: center;
       padding: 80px 20px 40px;
       border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 100px;
+      margin-top: 50px;
     }
 
     footer p {
@@ -260,6 +351,21 @@
       50% { transform: scaleY(0); opacity: 0; transform-origin: top; }
       50.1% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
       100% { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
+    }
+
+    @keyframes pulseText {
+      from { opacity: 0.4; text-shadow: 0 0 10px rgba(207, 168, 97, 0); }
+      to { opacity: 1; text-shadow: 0 0 20px rgba(207, 168, 97, 0.5); }
+    }
+
+    @keyframes loadLine {
+      0% { width: 0; }
+      100% { width: 300px; }
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* Custom Cursor */
@@ -323,10 +429,17 @@
       height: 60px;
       background-color: rgba(207, 168, 97, 0.1);
       border-color: transparent;
+      backdrop-filter: invert(10%);
     }
   </style>
 </head>
 <body>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="preloader-text">12 PROKES 2</div>
+    <div class="preloader-line"></div>
+  </div>
 
   <!-- Custom Cursor Elements -->
   <div class="cursor-dot" data-cursor-dot></div>
@@ -345,6 +458,27 @@
       <div class="scroll-line"></div>
     </div>
   </section>
+
+  <!-- Story Section -->
+  <section class="story-section reveal">
+    <h2 class="story-title">L'Histoire</h2>
+    <p class="story-text">
+      We are more than just a class; we are a symphony of unique souls bound by time.
+      Through laughter, trials, and triumphs, we carve our legacy into eternity.
+      Here is where elegance meets action, and excellence embraces the mind.
+    </p>
+    <div class="story-signature">Class of 2026</div>
+  </section>
+
+  <!-- Marquee Banner -->
+  <div class="marquee-container reveal">
+    <div class="marquee-text">
+      <span>ELEGANCE • UNITY • EXCELLENCE • 12 PROKES 2 • </span>
+      <span>ELEGANCE • UNITY • EXCELLENCE • 12 PROKES 2 • </span>
+      <span>ELEGANCE • UNITY • EXCELLENCE • 12 PROKES 2 • </span>
+      <span>ELEGANCE • UNITY • EXCELLENCE • 12 PROKES 2 • </span>
+    </div>
+  </div>
 
   <!-- Gallery Section -->
   <section class="gallery-container">
@@ -419,7 +553,17 @@
     <p>&copy; 2026. A Symphony of Memories.</p>
   </footer>
 
+  <!-- Vanilla Tilt JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
   <script>
+    // --- Preloader ---
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.preloader').classList.add('hidden');
+      }, 2000); // 2 second preloader delay
+    });
+
     // --- Custom Cursor ---
     const cursorDot = document.querySelector("[data-cursor-dot]");
     const cursorOutline = document.querySelector("[data-cursor-outline]");
@@ -431,18 +575,25 @@
       cursorDot.style.left = `${posX}px`;
       cursorDot.style.top = `${posY}px`;
 
-      // Slightly delayed following for the outline
       cursorOutline.animate({
         left: `${posX}px`,
         top: `${posY}px`
       }, { duration: 500, fill: "forwards" });
     });
 
-    // Add hover effect to gallery items
     const interactiveElements = document.querySelectorAll('.gallery-item');
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+    });
+
+    // --- Vanilla Tilt Initialization ---
+    VanillaTilt.init(document.querySelectorAll(".gallery-item"), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2,
+      scale: 1.02
     });
 
     // --- Elegant Particles ---
@@ -498,7 +649,7 @@
         let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
         let directionX = (Math.random() * 0.4) - 0.2;
         let directionY = (Math.random() * 0.4) - 0.2;
-        let color = 'rgba(207, 168, 97, ' + (Math.random() * 0.5 + 0.1) + ')'; // Gold with varying opacity
+        let color = 'rgba(207, 168, 97, ' + (Math.random() * 0.5 + 0.1) + ')';
 
         particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
       }
@@ -532,7 +683,6 @@
     }
 
     window.addEventListener("scroll", reveal);
-    // Trigger on load
     reveal();
   </script>
 </body>
