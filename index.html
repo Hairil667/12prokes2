@@ -79,6 +79,139 @@
       visibility: hidden;
     }
 
+
+    /* Fullscreen Menu */
+    .menu-btn {
+      position: fixed;
+      top: 40px;
+      right: 40px;
+      z-index: 10001;
+      cursor: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      mix-blend-mode: difference;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 35px;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: all 0.4s ease;
+    }
+
+    .menu-btn:hover span:nth-child(2) {
+      width: 20px;
+      margin-left: 15px;
+      background-color: var(--gold-accent);
+    }
+
+    .menu-btn.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+      background-color: var(--gold-accent);
+    }
+    .menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+      background-color: var(--gold-accent);
+    }
+
+    .fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(3, 3, 3, 0.98);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .fullscreen-menu.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .menu-links {
+      list-style: none;
+      text-align: center;
+    }
+
+    .menu-links li {
+      margin: 30px 0;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fullscreen-menu.active .menu-links li {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .fullscreen-menu.active .menu-links li:nth-child(1) { transition-delay: 0.1s; }
+    .fullscreen-menu.active .menu-links li:nth-child(2) { transition-delay: 0.2s; }
+    .fullscreen-menu.active .menu-links li:nth-child(3) { transition-delay: 0.3s; }
+    .fullscreen-menu.active .menu-links li:nth-child(4) { transition-delay: 0.4s; }
+
+    .menu-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s ease;
+      cursor: none;
+    }
+
+    .menu-links a:hover {
+      color: var(--gold-accent);
+    }
+
+    .menu-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1px;
+      background-color: var(--gold-accent);
+      transition: width 0.4s ease;
+    }
+
+    .menu-links a:hover::after {
+      width: 100%;
+    }
+
+
+    /* Cinematic Text Reveal */
+    .hero h1 {
+      display: flex;
+      overflow: hidden;
+      justify-content: center;
+    }
+
+    .hero h1 .char {
+      transform: translateY(110%);
+      transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .hero.loaded h1 .char {
+      transform: translateY(0);
+    }
+
     /* Header Section */
     .hero {
       height: 100vh;
@@ -133,6 +266,24 @@
       height: 60px;
       background: linear-gradient(to bottom, var(--gold-accent), transparent);
       animation: pulseLine 2s infinite;
+    }
+
+
+    /* Separators */
+    .separator {
+      width: 1px;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--gold-accent), transparent);
+      margin: 0 auto;
+      opacity: 0.5;
+    }
+
+    .separator-horizontal {
+      width: 150px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-accent), transparent);
+      margin: 40px auto;
+      opacity: 0.5;
     }
 
     /* Story Section */
@@ -368,6 +519,91 @@
       100% { transform: translateX(-50%); }
     }
 
+
+    /* Quote Section */
+    .quote-section {
+      padding: 150px 10%;
+      text-align: center;
+      position: relative;
+    }
+
+    .quote-icon {
+      font-family: 'Cinzel', serif;
+      font-size: 5rem;
+      color: var(--gold-accent);
+      opacity: 0.3;
+      line-height: 0;
+      margin-bottom: 30px;
+    }
+
+    .quote-text {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      line-height: 1.6;
+      color: var(--text-main);
+      max-width: 1000px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+
+    .quote-author {
+      margin-top: 40px;
+      font-size: 1rem;
+      letter-spacing: 4px;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+    }
+
+    /* Detailed Footer */
+    footer {
+      padding: 80px 10%;
+      text-align: center;
+      border-top: 1px solid rgba(207, 168, 97, 0.1);
+      background-color: #020202;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      letter-spacing: 8px;
+      color: var(--gold-accent);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      transition: opacity 0.3s ease, color 0.3s ease;
+      cursor: none;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--gold-accent);
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      opacity: 0.4;
+    }
+
     /* Custom Cursor */
     .cursor-dot,
     .cursor-outline {
@@ -435,7 +671,25 @@
 </head>
 <body>
 
+
+  <!-- Navigation / Fullscreen Menu -->
+  <div class="menu-btn" id="menuBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="fullscreen-menu" id="fullscreenMenu">
+    <ul class="menu-links">
+      <li><a href="#home" class="menu-link">Home</a></li>
+      <li><a href="#story" class="menu-link">L'Histoire</a></li>
+      <li><a href="#collection" class="menu-link">The Collection</a></li>
+      <li><a href="#quote" class="menu-link">Epilogue</a></li>
+    </ul>
+  </nav>
+
   <!-- Preloader -->
+
   <div class="preloader">
     <div class="preloader-text">12 PROKES 2</div>
     <div class="preloader-line"></div>
@@ -449,9 +703,9 @@
   <canvas id="particles-canvas"></canvas>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero" id="home">
     <div class="hero-subtitle">Maison de</div>
-    <h1>12 Prokes 2</h1>
+    <h1 id="hero-title">12 PROKES 2</h1>
 
     <div class="scroll-indicator">
       <span>Discover</span>
@@ -460,7 +714,8 @@
   </section>
 
   <!-- Story Section -->
-  <section class="story-section reveal">
+  <div class="separator reveal"></div>
+  <section class="story-section reveal" id="story">
     <h2 class="story-title">L'Histoire</h2>
     <p class="story-text">
       We are more than just a class; we are a symphony of unique souls bound by time.
@@ -481,7 +736,8 @@
   </div>
 
   <!-- Gallery Section -->
-  <section class="gallery-container">
+  <div class="separator reveal"></div>
+  <section class="gallery-container" id="collection">
     <div class="gallery-header reveal">
       <h2>The Collection</h2>
       <p>Curated memories & moments of elegance.</p>
@@ -547,20 +803,102 @@
     </div>
   </section>
 
+
+  <!-- Quote Section -->
+  <section class="quote-section reveal" id="quote">
+    <div class="quote-icon">"</div>
+    <p class="quote-text">
+      Elegance is not about being noticed, it's about being remembered.
+      In the halls of our youth, we etched a legacy that time cannot erase.
+    </p>
+    <div class="separator-horizontal"></div>
+    <div class="quote-author">The Collective Spirit</div>
+  </section>
+
   <!-- Footer -->
   <footer>
-    <span class="footer-logo">12 PROKES 2</span>
-    <p>&copy; 2026. A Symphony of Memories.</p>
+    <div class="footer-content reveal">
+      <div class="footer-logo">12 PROKES 2</div>
+      <div class="footer-links">
+        <a href="https://instagram.com" target="_blank" class="menu-link">Instagram</a>
+        <a href="#" class="menu-link">Journal</a>
+        <a href="#" class="menu-link">Archive</a>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 12 PROKES 2. A Symphony of Memories. All rights reserved.
+      </div>
+    </div>
   </footer>
+
 
   <!-- Vanilla Tilt JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
   <script>
+
+    // --- Text Splitting for Cinematic Intro ---
+    const heroTitle = document.getElementById('hero-title');
+    if(heroTitle) {
+      const text = heroTitle.innerText;
+      heroTitle.innerHTML = '';
+
+      for(let i = 0; i < text.length; i++) {
+        let span = document.createElement('span');
+        if(text[i] === ' ') {
+          span.innerHTML = '&nbsp;';
+        } else {
+          span.innerText = text[i];
+        }
+        span.className = 'char';
+        span.style.transitionDelay = `${1.5 + (i * 0.1)}s`; // Delay after preloader
+        span.style.display = 'inline-block';
+        heroTitle.appendChild(span);
+      }
+    }
+
+    // --- Fullscreen Menu Logic ---
+    const menuBtn = document.getElementById('menuBtn');
+    const fullscreenMenu = document.getElementById('fullscreenMenu');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    if(menuBtn && fullscreenMenu) {
+      menuBtn.addEventListener('click', () => {
+        menuBtn.classList.toggle('active');
+        fullscreenMenu.classList.toggle('active');
+      });
+
+      // Close menu when clicking a link
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          menuBtn.classList.remove('active');
+          fullscreenMenu.classList.remove('active');
+        });
+
+        // Add custom cursor hover effect for menu links
+        link.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+        link.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+      });
+    }
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
     // --- Preloader ---
+
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.querySelector('.preloader').classList.add('hidden');
+        setTimeout(() => { document.querySelector('.hero').classList.add('loaded'); }, 100);
       }, 2000); // 2 second preloader delay
     });
 
