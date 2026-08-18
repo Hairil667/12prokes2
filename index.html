@@ -48,7 +48,7 @@
       z-index: 99;
     }
 
-    /* Preloader */
+    /* Preloader & Cinematic Bars */
     .preloader {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -58,25 +58,89 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: opacity 1s ease, visibility 1s ease;
+      transition: opacity 1.5s cubic-bezier(0.7, 0, 0.3, 1), visibility 1.5s;
+    }
+    .preloader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    .preloader.hidden .preloader-content {
+      opacity: 0;
     }
     .preloader-text {
       font-family: 'Cinzel', serif;
       font-size: 2rem;
-      letter-spacing: 10px;
+      letter-spacing: 12px;
       color: var(--gold-accent);
-      margin-bottom: 20px;
-      animation: pulseText 1.5s infinite alternate;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      animation: cinematicPulse 2s infinite alternate;
+    }
+    .preloader-counter {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      color: var(--text-main);
+      margin-bottom: 15px;
+      opacity: 0.8;
+    }
+    .preloader-line-container {
+      width: 250px;
+      height: 1px;
+      background-color: rgba(207, 168, 97, 0.2);
+      position: relative;
     }
     .preloader-line {
       width: 0;
-      height: 1px;
+      height: 100%;
       background-color: var(--gold-accent);
-      animation: loadLine 2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+      box-shadow: 0 0 10px rgba(207,168,97,0.5);
     }
     .preloader.hidden {
       opacity: 0;
       visibility: hidden;
+    }
+
+    .cinematic-bar {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      height: 12vh;
+      background-color: #000;
+      z-index: 9998;
+      transition: transform 1.8s cubic-bezier(0.7, 0, 0.3, 1);
+      pointer-events: none;
+    }
+    .cinematic-bar.top {
+      top: 0;
+      transform: translateY(0);
+    }
+    .cinematic-bar.bottom {
+      bottom: 0;
+      transform: translateY(0);
+    }
+    .hero.loaded ~ .cinematic-bar.top {
+      transform: translateY(-100%);
+    }
+    .hero.loaded ~ .cinematic-bar.bottom {
+      transform: translateY(100%);
+    }
+
+    /* Ambient Glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(circle, rgba(207,168,97,0.08) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      pointer-events: none;
     }
 
 
@@ -204,12 +268,14 @@
     }
 
     .hero h1 .char {
-      transform: translateY(110%);
-      transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      transform: translateY(120%) scale(1.1);
+      opacity: 0;
+      transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.8s ease;
     }
 
     .hero.loaded h1 .char {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      opacity: 1;
     }
 
     /* Header Section */
@@ -227,38 +293,50 @@
     .hero-subtitle {
       font-size: 14px;
       text-transform: uppercase;
-      letter-spacing: 8px;
+      letter-spacing: 12px;
       color: var(--gold-accent);
       margin-bottom: 20px;
-      animation: fadeIn 2s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 2s ease 1.5s, transform 2s ease 1.5s;
+    }
+
+    .hero.loaded .hero-subtitle {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .hero h1 {
       font-family: 'Cinzel', serif;
       font-size: clamp(3rem, 8vw, 8rem);
       font-weight: 400;
-      letter-spacing: 2px;
-      background: linear-gradient(to right, #fff, #a3a3a3);
+      letter-spacing: 4px;
+      background: linear-gradient(to right, #fff, #d4d4d4, #fff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 30px;
-      animation: slideUp 1.5s ease forwards;
+      text-shadow: 0px 10px 30px rgba(0,0,0,0.8);
     }
 
     .scroll-indicator {
       position: absolute;
-      bottom: 40px;
+      bottom: 15vh; /* Adjusted for cinematic bottom bar */
       left: 50%;
       transform: translateX(-50%);
       font-size: 12px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--gold-accent);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      animation: fadeIn 2s ease forwards;
+      gap: 15px;
+      opacity: 0;
+      transition: opacity 2s ease 2s;
+    }
+
+    .hero.loaded .scroll-indicator {
+      opacity: 1;
     }
 
     .scroll-line {
@@ -504,14 +582,9 @@
       100% { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
     }
 
-    @keyframes pulseText {
-      from { opacity: 0.4; text-shadow: 0 0 10px rgba(207, 168, 97, 0); }
-      to { opacity: 1; text-shadow: 0 0 20px rgba(207, 168, 97, 0.5); }
-    }
-
-    @keyframes loadLine {
-      0% { width: 0; }
-      100% { width: 300px; }
+    @keyframes cinematicPulse {
+      0% { opacity: 0.4; filter: blur(2px); text-shadow: 0 0 10px rgba(207, 168, 97, 0); }
+      100% { opacity: 1; filter: blur(0px); text-shadow: 0 0 30px rgba(207, 168, 97, 0.8); }
     }
 
     @keyframes marquee {
@@ -647,11 +720,18 @@
       pointer-events: none;
     }
 
-    /* Reveal on Scroll */
+    /* Cinematic Reveal on Scroll */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      transform: translateY(60px) scale(0.98);
+      filter: blur(4px);
+      transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
     }
 
     .reveal.active {
@@ -689,10 +769,14 @@
   </nav>
 
   <!-- Preloader -->
-
   <div class="preloader">
-    <div class="preloader-text">12 PROKES 2</div>
-    <div class="preloader-line"></div>
+    <div class="preloader-content">
+      <div class="preloader-text">12 PROKES 2</div>
+      <div class="preloader-counter" id="preloader-counter">0%</div>
+      <div class="preloader-line-container">
+        <div class="preloader-line" id="preloader-line"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Custom Cursor Elements -->
@@ -702,7 +786,7 @@
   <!-- Particles Background -->
   <canvas id="particles-canvas"></canvas>
 
-  <!-- Hero Section -->
+  <!-- Hero Section & Cinematic Bars -->
   <section class="hero" id="home">
     <div class="hero-subtitle">Maison de</div>
     <h1 id="hero-title">12 PROKES 2</h1>
@@ -712,6 +796,8 @@
       <div class="scroll-line"></div>
     </div>
   </section>
+  <div class="cinematic-bar top"></div>
+  <div class="cinematic-bar bottom"></div>
 
   <!-- Story Section -->
   <div class="separator reveal"></div>
@@ -893,29 +979,51 @@
       });
     });
 
-    // --- Preloader ---
+    // --- Cinematic Preloader ---
+    const counterElement = document.getElementById('preloader-counter');
+    const lineElement = document.getElementById('preloader-line');
+    let loadProgress = 0;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const preloader = document.querySelector('.preloader');
-        if (preloader) preloader.classList.add('hidden');
+    // Animate loader percentage
+    const loaderInterval = setInterval(() => {
+      loadProgress += Math.floor(Math.random() * 5) + 2; // Random increment between 2-6%
 
+      if (loadProgress >= 100) {
+        loadProgress = 100;
+        clearInterval(loaderInterval);
+
+        // Hide preloader when complete
         setTimeout(() => {
-          const hero = document.querySelector('.hero');
-          if (hero) hero.classList.add('loaded');
-        }, 100);
-      }, 2000); // 2 second preloader delay
-    });
+          const preloader = document.querySelector('.preloader');
+          if (preloader) preloader.classList.add('hidden');
 
-    // Fallback just in case DOMContentLoaded was already fired
+          // Trigger cinematic hero reveal after preloader fades
+          setTimeout(() => {
+            const hero = document.querySelector('.hero');
+            if (hero) hero.classList.add('loaded');
+          }, 800);
+        }, 500); // Wait 0.5s at 100% before fading out
+      }
+
+      if(counterElement) counterElement.innerText = loadProgress + '%';
+      if(lineElement) lineElement.style.width = loadProgress + '%';
+
+    }, 40); // Fast interval for loader speed
+
+    // Fallback strictly to make sure preloader disappears
     setTimeout(() => {
+      clearInterval(loaderInterval);
+      if(counterElement) counterElement.innerText = '100%';
+      if(lineElement) lineElement.style.width = '100%';
       const preloader = document.querySelector('.preloader');
       if (preloader && !preloader.classList.contains('hidden')) {
         preloader.classList.add('hidden');
-        const hero = document.querySelector('.hero');
-        if (hero) hero.classList.add('loaded');
+        setTimeout(() => {
+          const hero = document.querySelector('.hero');
+          if (hero) hero.classList.add('loaded');
+        }, 800);
       }
-    }, 3000);
+    }, 4000);
 
     // --- Custom Cursor ---
     const cursorDot = document.querySelector("[data-cursor-dot]");
