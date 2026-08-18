@@ -895,12 +895,27 @@
 
     // --- Preloader ---
 
-    window.addEventListener('load', () => {
+    document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
-        document.querySelector('.preloader').classList.add('hidden');
-        setTimeout(() => { document.querySelector('.hero').classList.add('loaded'); }, 100);
+        const preloader = document.querySelector('.preloader');
+        if (preloader) preloader.classList.add('hidden');
+
+        setTimeout(() => {
+          const hero = document.querySelector('.hero');
+          if (hero) hero.classList.add('loaded');
+        }, 100);
       }, 2000); // 2 second preloader delay
     });
+
+    // Fallback just in case DOMContentLoaded was already fired
+    setTimeout(() => {
+      const preloader = document.querySelector('.preloader');
+      if (preloader && !preloader.classList.contains('hidden')) {
+        preloader.classList.add('hidden');
+        const hero = document.querySelector('.hero');
+        if (hero) hero.classList.add('loaded');
+      }
+    }, 3000);
 
     // --- Custom Cursor ---
     const cursorDot = document.querySelector("[data-cursor-dot]");
