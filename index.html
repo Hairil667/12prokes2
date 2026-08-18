@@ -1,202 +1,379 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>12prokes2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Exclusive Collection | 12prokes2</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    :root {
+      --bg-color: #030303;
+      --text-main: #f4f0e6;
+      --gold-accent: #cfa861;
+      --gold-dark: #8c7343;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Montserrat', sans-serif;
-      color: #ffffff;
-      background: linear-gradient(180deg, #050505, #111115, #1e1b24);
-      background-attachment: fixed;
-      overflow-x: hidden;
-      position: relative;
-    }/* Cetak biru grid effect */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-  animation: gridMove 15s linear infinite;
-}
-
-@keyframes gridMove {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(40px); }
-}
-
-header {
-  width: 100%;
-  padding: 25px 0;
-  text-align: center;
-  font-size: 36px;
-  font-weight: 700;
-  font-family: 'Playfair Display', serif;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  animation: fadeDown 1s ease;
-  background: linear-gradient(90deg, #d4af37, #fdfbfb, #d4af37);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
-  animation: fadeDown 1s ease, shine 3s linear infinite;
-}
-
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
-}
-
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.container {
-  padding: 25px;
-  position: relative;
-  z-index: 3;
-}
-
-.foto-box {
-  background: rgba(255,255,255,0.03);
-  padding: 15px;
-  border-radius: 18px;
-  margin-bottom: 30px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  transform: translateY(30px);
-  opacity: 0;
-  animation: fadeUp 1.3s ease forwards;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-}
-
-.foto-box:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.2);
-  border-color: rgba(212, 175, 55, 0.7);
-  z-index: 10;
-}
-
-.foto-box:nth-child(2) { animation-delay: 0.3s; }
-.foto-box:nth-child(3) { animation-delay: 0.6s; }
-.foto-box:nth-child(4) { animation-delay: 0.9s; }
-.foto-box:nth-child(5) { animation-delay: 1.2s; }
-.foto-box:nth-child(6) { animation-delay: 1.5s; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.foto-box img {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-  animation: pop 0.6s ease;
-  transition: transform 0.4s ease;
-}
-
-.foto-box:hover img {
-  transform: scale(1.03);
-}
-
-@keyframes pop {
-  from { transform: scale(0.95); }
-  to { transform: scale(1); }
-}
-
-.caption {
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  color: #f0e6d2;
-  text-align: center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-/* Efek partikel bintang */
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.star {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: #ffd700;
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: blink 2s infinite ease-in-out;
-  box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-}
-
-@keyframes blink {
-  0% { opacity: 0.2; }
-  50% { opacity: 1; }
-  100% { opacity: 0.2; }
-}
-
-</style>
-</head>
-<body>  <div class="stars" id="stars"></div>  <header>12prokes2</header>  <div class="container"><div class="foto-box">
-  <img src="IMG_20250925_133246.jpg" />
-  <div class="caption">ketua baron dan wakil nya</div>
-</div>
-
-<div class="foto-box">
-  <img src="IMG-20251104-WA0001.jpg" />
-  <div class="caption">makan 😋</div>
-</div>
-
-<div class="foto-box">
-  <img src="IMG-20250620-WA0046.jpg" />
-  <div class="caption">gangster Mataram</div>
-</div>
-
-<div class="foto-box">
-  <img src="IMG-20250809-WA0051.jpg" />
-  <div class="caption">pemuda alim</div>
-</div>
-<div class="foto-box">
-  <img src="IMG-20251025-WA0001.jpg" />
-  <div class="caption">my bini</div>
-</div>
-  </div>  <script>
-    const starContainer = document.getElementById("stars");
-    for (let i = 0; i < 80; i++) {
-      const s = document.createElement("div");
-      s.classList.add("star");
-      s.style.left = Math.random() * 100 + "%";
-      s.style.top = Math.random() * 100 + "%";
-      s.style.animationDelay = (Math.random() * 2) + "s";
-      starContainer.appendChild(s);
     }
-  </script></body>
-  </html>
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Jost', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Noise Texture Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Header Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      color: var(--gold-accent);
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3rem, 8vw, 8rem);
+      font-weight: 400;
+      letter-spacing: 2px;
+      background: linear-gradient(to right, #fff, #a3a3a3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 30px;
+      animation: slideUp 1.5s ease forwards;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold-accent), transparent);
+      animation: pulseLine 2s infinite;
+    }
+
+    /* Gallery Section */
+    .gallery-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 100px 4vw;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .gallery-header h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: var(--gold-accent);
+      margin-bottom: 10px;
+    }
+
+    .gallery-header p {
+      font-size: 1.1rem;
+      color: #888;
+      font-weight: 300;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+
+    /* Individual Card */
+    .gallery-item {
+      position: relative;
+
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .img-wrapper {
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .img-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 50%);
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
+    }
+
+    .gallery-item:hover .img-wrapper::after {
+      opacity: 0.8;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0%) contrast(1.05);
+    }
+
+    .item-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 30px;
+      transform: translateY(20px);
+      transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .gallery-item:hover .item-content {
+      transform: translateY(0);
+    }
+
+    .item-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 5px;
+      opacity: 0.9;
+    }
+
+    .item-category {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-accent);
+      position: relative;
+      display: inline-block;
+    }
+
+    .item-category::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background-color: var(--gold-accent);
+      transition: width 0.5s ease;
+    }
+
+    .gallery-item:hover .item-category::after {
+      width: 100%;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 80px 20px 40px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 100px;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      color: #555;
+      letter-spacing: 1px;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseLine {
+      0% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+      50% { transform: scaleY(0); opacity: 0; transform-origin: top; }
+      50.1% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+      100% { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
+    }
+
+    /* Reveal on Scroll */
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-subtitle">Maison de</div>
+    <h1>12 Prokes 2</h1>
+
+    <div class="scroll-indicator">
+      <span>Discover</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery-container">
+    <div class="gallery-header reveal">
+      <h2>The Collection</h2>
+      <p>Curated memories & moments of elegance.</p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <!-- Item 1 -->
+      <div class="gallery-item reveal">
+        <div class="img-wrapper">
+          <img src="IMG_20250925_133246.jpg" alt="Ketua dan Wakil">
+        </div>
+        <div class="item-content">
+          <div class="item-title">The Leaders</div>
+          <div class="item-category">Ketua Baron & Wakil</div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="gallery-item reveal">
+        <div class="img-wrapper">
+          <img src="IMG-20251104-WA0001.jpg" alt="Makan">
+        </div>
+        <div class="item-content">
+          <div class="item-title">Culinary</div>
+          <div class="item-category">Makan 😋</div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="gallery-item reveal">
+        <div class="img-wrapper">
+          <img src="IMG-20250620-WA0046.jpg" alt="Gangster">
+        </div>
+        <div class="item-content">
+          <div class="item-title">The Syndicate</div>
+          <div class="item-category">Gangster Mataram</div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="gallery-item reveal">
+        <div class="img-wrapper">
+          <img src="IMG-20250809-WA0051.jpg" alt="Pemuda Alim">
+        </div>
+        <div class="item-content">
+          <div class="item-title">Purity</div>
+          <div class="item-category">Pemuda Alim</div>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="gallery-item reveal">
+        <div class="img-wrapper">
+          <img src="IMG-20251025-WA0001.jpg" alt="My Bini">
+        </div>
+        <div class="item-content">
+          <div class="item-title">The Muse</div>
+          <div class="item-category">My Bini</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-logo">12 PROKES 2</span>
+    <p>&copy; 2026. A Symphony of Memories.</p>
+  </footer>
+
+  <script>
+    // Reveal on scroll functionality
+    function reveal() {
+      var reveals = document.querySelectorAll(".reveal");
+
+      for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 100;
+
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add("active");
+        }
+      }
+    }
+
+    window.addEventListener("scroll", reveal);
+    // Trigger on load
+    reveal();
+  </script>
+</body>
+</html>
