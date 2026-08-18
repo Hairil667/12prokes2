@@ -31,6 +31,12 @@
       line-height: 1.6;
     }
 
+    @media (pointer: fine) {
+      body, a, button, .gallery-item {
+        cursor: none;
+      }
+    }
+
     /* Noise Texture Overlay */
     body::before {
       content: "";
@@ -256,20 +262,78 @@
       100% { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
     }
 
+    /* Custom Cursor */
+    .cursor-dot,
+    .cursor-outline {
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--gold-accent);
+    }
+
+    .cursor-outline {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(207, 168, 97, 0.5);
+      transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+
+    body:hover .cursor-dot,
+    body:hover .cursor-outline {
+      opacity: 1;
+    }
+
+    /* Particles Background */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
     /* Reveal on Scroll */
     .reveal {
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Hover state for links/interactive elements */
+    .hover-active .cursor-outline {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(207, 168, 97, 0.1);
+      border-color: transparent;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Custom Cursor Elements -->
+  <div class="cursor-dot" data-cursor-dot></div>
+  <div class="cursor-outline" data-cursor-outline></div>
+
+  <!-- Particles Background -->
+  <canvas id="particles-canvas"></canvas>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -356,7 +420,103 @@
   </footer>
 
   <script>
-    // Reveal on scroll functionality
+    // --- Custom Cursor ---
+    const cursorDot = document.querySelector("[data-cursor-dot]");
+    const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+    window.addEventListener("mousemove", function (e) {
+      const posX = e.clientX;
+      const posY = e.clientY;
+
+      cursorDot.style.left = `${posX}px`;
+      cursorDot.style.top = `${posY}px`;
+
+      // Slightly delayed following for the outline
+      cursorOutline.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+      }, { duration: 500, fill: "forwards" });
+    });
+
+    // Add hover effect to gallery items
+    const interactiveElements = document.querySelectorAll('.gallery-item');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+    });
+
+    // --- Elegant Particles ---
+    const canvas = document.getElementById("particles-canvas");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize',
+      function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+      }
+    );
+
+    class Particle {
+      constructor(x, y, directionX, directionY, size, color) {
+        this.x = x;
+        this.y = y;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.size = size;
+        this.color = color;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      update() {
+        if (this.x > canvas.width || this.x < 0) {
+          this.directionX = -this.directionX;
+        }
+        if (this.y > canvas.height || this.y < 0) {
+          this.directionY = -this.directionY;
+        }
+        this.x += this.directionX;
+        this.y += this.directionY;
+        this.draw();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      let numberOfParticles = (canvas.height * canvas.width) / 15000;
+      for (let i = 0; i < numberOfParticles; i++) {
+        let size = (Math.random() * 2) + 0.5;
+        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+        let directionX = (Math.random() * 0.4) - 0.2;
+        let directionY = (Math.random() * 0.4) - 0.2;
+        let color = 'rgba(207, 168, 97, ' + (Math.random() * 0.5 + 0.1) + ')'; // Gold with varying opacity
+
+        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+      }
+    }
+
+    function animateParticles() {
+      requestAnimationFrame(animateParticles);
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+      }
+    }
+
+    initParticles();
+    animateParticles();
+
+    // --- Reveal on scroll functionality ---
     function reveal() {
       var reveals = document.querySelectorAll(".reveal");
 
