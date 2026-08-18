@@ -3,13 +3,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>12prokes2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Montserrat', sans-serif;
       color: #ffffff;
-      background: linear-gradient(180deg, #000000, #1a1a1a, #2e2e2e);
+      background: linear-gradient(180deg, #050505, #111115, #1e1b24);
       background-attachment: fixed;
       overflow-x: hidden;
       position: relative;
@@ -39,15 +42,27 @@ header {
   width: 100%;
   padding: 25px 0;
   text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(6px);
+  font-size: 36px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 5;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   animation: fadeDown 1s ease;
+  background: linear-gradient(90deg, #d4af37, #fdfbfb, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: fadeDown 1s ease, shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
 }
 
 @keyframes fadeDown {
@@ -62,20 +77,31 @@ header {
 }
 
 .foto-box {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
   padding: 15px;
   border-radius: 18px;
   margin-bottom: 30px;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   transform: translateY(30px);
   opacity: 0;
   animation: fadeUp 1.3s ease forwards;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.foto-box:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.7);
+  z-index: 10;
 }
 
 .foto-box:nth-child(2) { animation-delay: 0.3s; }
 .foto-box:nth-child(3) { animation-delay: 0.6s; }
 .foto-box:nth-child(4) { animation-delay: 0.9s; }
+.foto-box:nth-child(5) { animation-delay: 1.2s; }
+.foto-box:nth-child(6) { animation-delay: 1.5s; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(40px); }
@@ -87,6 +113,11 @@ header {
   border-radius: 12px;
   display: block;
   animation: pop 0.6s ease;
+  transition: transform 0.4s ease;
+}
+
+.foto-box:hover img {
+  transform: scale(1.03);
 }
 
 @keyframes pop {
@@ -95,22 +126,13 @@ header {
 }
 
 .caption {
-  margin-top: 10px;
+  margin-top: 15px;
   font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: #f0e6d2;
   text-align: center;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-}
-/* Animasi toing-toing */
-@keyframes toing {
-  0% { transform: translateY(0) scale(1); }
-  25% { transform: translateY(-10px) scale(1.02); }
-  50% { transform: translateY(0) scale(1); }
-  75% { transform: translateY(10px) scale(0.98); }
-  100% { transform: translateY(0) scale(1); }
-}
-
-.toing {
-  animation: toing 2.3s ease-in-out infinite;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 /* Efek partikel bintang */
@@ -128,10 +150,11 @@ header {
   position: absolute;
   width: 3px;
   height: 3px;
-  background: white;
+  background: #ffd700;
   border-radius: 50%;
-  opacity: 0.8;
+  opacity: 0.6;
   animation: blink 2s infinite ease-in-out;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
 @keyframes blink {
@@ -143,26 +166,26 @@ header {
 </style>
 </head>
 <body>  <div class="stars" id="stars"></div>  <header>12prokes2</header>  <div class="container"><div class="foto-box">
-  <img class="toing" src="IMG_20250925_133246.jpg"" />
+  <img src="IMG_20250925_133246.jpg" />
   <div class="caption">ketua baron dan wakil nya</div>
 </div>
 
 <div class="foto-box">
-  <img class="toing" src="IMG-20251104-WA0001.jpg"" />
+  <img src="IMG-20251104-WA0001.jpg" />
   <div class="caption">makan 😋</div>
 </div>
 
 <div class="foto-box">
-  <img class="toing" src="IMG-20250620-WA0046.jpg"" />
+  <img src="IMG-20250620-WA0046.jpg" />
   <div class="caption">gangster Mataram</div>
 </div>
 
 <div class="foto-box">
-  <img class="toing" src="IMG-20250809-WA0051.jpg"" />
+  <img src="IMG-20250809-WA0051.jpg" />
   <div class="caption">pemuda alim</div>
 </div>
 <div class="foto-box">
-  <img class="toing" src="IMG-20251025-WA0001.jpg"" />
+  <img src="IMG-20251025-WA0001.jpg" />
   <div class="caption">my bini</div>
 </div>
   </div>  <script>
